@@ -1,20 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+
+        .cur-weath {
+            width: 800px;
+            height: 200px;
+            background-color: white;
+        }
+
+        .hourly-weath {
+            width: 800px;
+            height: 400px;
+            background-color: white;
+            margin-top: 30px;
+            margin-bottom: 30px;
+
+
+        }
+
+        .nearb-weath {
+            width: 800px;
+            height: 200px;
+            background-color: white;
+
+        }
+
+        #weath-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+        }
+
+        .header-cont {
+            display: flex;
+        }
+
+        .nav {
+            list-style-type: none;
+            display: flex;
+        }
+
+        .nav-item {
+            margin-right: 20px;
+
+        }
+
+        .cur-weath__cont {
+            display: flex;
+        }
+
+        #date {
+            margin-left: auto;
+        }
+
+        .ico-cont {
+            flex-direction: column
+        }
+
+        .--sub {
+            margin-top: 50px;
+        }
+
+        .temp-cont {
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .idk-how-name-this-shi {
+            flex-direction: column;
+        }
+    </style>
 </head>
 
 <body>
-    <ul>
-        <li><a href="#">Today</a></li>
-        <li><a href="#">5-day forecast</a></li>
-    </ul>
+    <div class="container">
 
+        <header>
+            <div class="header-cont">
+                <div class="mainTitle">WEATHER-FORECAST</div>
+                <input type="text">
+            </div>
+
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item"><a href="#">Today</a></li>
+                    <li class="nav-item"><a href="#">5-day forecast</a></li>
+                </ul>
+            </nav>
+
+        </header>
+
+        <div class="cur-weath">
+
+            <div class="cur-weath__cont">
+                <div id="title">Current weather</div>
+                <div id="date"></div>
+            </div>
+
+            <div class="cur-weath__cont --sub">
+
+                <div class="ico-cont">
+                    <img id="weath-icon"></img>
+                    <div id="under-icon"></div>
+                </div>
+
+                <div class="temp-cont">
+                    <div id="temp"></div>
+                    <div id="under-temp"></div>
+                </div>
+
+                <div class="idk-how-name-this-shi">
+                    <div id="sunrise"></div>
+                    <div id="sunset"></div>
+                    <div id="duration"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="hourly-weath">
+
+        </div>
+
+
+        <div class="nearb-weath">
+
+        </div>
+
+    </div>
     <script>
- 
+        let weathData = {
+            current: {
+
+                icon: 'https://png.pngtree.com/svg/20161124/sunny_26629.png',
+                underIcoText: 'Sunny',
+
+                temp: '29',
+                underTemp: 'Real Feel 30',
+
+                sunrise: '7 04 AM',
+                sunset: '5 11 PM',
+                duration: '10 07 hr',
+
+            },
+            latAndLonData: []
+        };
+
+
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                console.log('Ure coords: ' +
+                    position.coords.latitude + ", " + position.coords.longitude);
+                weathData.latAndLonData.push(position.coords.latitude);
+                weathData.latAndLonData.push(position.coords.longitude);
+
+            }
+        );
+        console.log(weathData.latAndLonData[1]);
+
+        let lat = weathData.latAndLonData[0];
+        const apiCall = `api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${weathData.latAndLonData[1]}
+       &appid=d9c1bf27b78e35489e25659a28c7b4ed`;
+
+        setInterval(() => {
+            console.log(apiCall);
+            console.log(weathData.latAndLonData[0]);
+            console.log(lat);
+        }, 2000);
+
+
+        const currentOut = () => {
+            document.getElementById('weath-icon').setAttribute('src', weathData.current.icon);
+            document.getElementById('under-icon').innerHTML = weathData.current.underIcoText;
+            document.getElementById('temp').innerHTML = weathData.current.temp;
+            document.getElementById('under-temp').innerHTML = weathData.current.underTemp;
+            document.getElementById('sunrise').innerHTML = weathData.current.sunrise;
+            document.getElementById('sunset').innerHTML = weathData.current.sunset;
+            document.getElementById('duration').innerHTML = weathData.current.duration;
+        }
+        currentOut();
+
+        const dateCurr = new Date;
+        document.getElementById('date').innerHTML = dateCurr;
     </script>
 </body>
+
 </html>
