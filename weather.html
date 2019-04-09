@@ -165,27 +165,32 @@
         };
 
 
+        console.log(Math.floor(39.7280845));
+        const getGeoloc = (callback) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log('Ure coords: ' +
+                        position.coords.latitude + ", " + position.coords.longitude);
+                    weathData.latAndLonData.push(Math.floor(position.coords.latitude));
+                    weathData.latAndLonData.push(Math.floor(position.coords.longitude));
+                    console.log(weathData.latAndLonData[1]);
+                    callback();
+                }
+            );
+        };
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                console.log('Ure coords: ' +
-                    position.coords.latitude + ", " + position.coords.longitude);
-                weathData.latAndLonData.push(position.coords.latitude);
-                weathData.latAndLonData.push(position.coords.longitude);
+        const apiCallFunc = () => {
+            const apiCall =
+                `api.openweathermap.org/data/2.5/weather?lat=${weathData.latAndLonData[0]}&lon=${weathData.latAndLonData[1]}&appid=d9c1bf27b78e35489e25659a28c7b4ed`;
 
-            }
-        );
-        console.log(weathData.latAndLonData[1]);
+            setInterval(() => {
+                console.log(apiCall);
+                console.log(weathData.latAndLonData[0]);
+            }, 2000);
+        };
 
-        let lat = weathData.latAndLonData[0];
-        const apiCall = `api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${weathData.latAndLonData[1]}
-       &appid=d9c1bf27b78e35489e25659a28c7b4ed`;
+        getGeoloc(apiCallFunc);
 
-        setInterval(() => {
-            console.log(apiCall);
-            console.log(weathData.latAndLonData[0]);
-            console.log(lat);
-        }, 2000);
 
 
         const currentOut = () => {
