@@ -6,22 +6,19 @@
      </div>
     <nav>
         <ul class="nav">
-            <li class="nav-item"><a href="#">Today</a></li>
-            <li class="nav-item"><a href="#">5-day forecast</a></li>
+            <li class="nav-item"><router-link to="/today">Today</router-link></li>
+            <li class="nav-item"><router-link to="/fiveday">5-day forecast</router-link></li>
         </ul>
      </nav>
 </div>
 </template>
 
 <script>
+/*
 import apiService from '../services/apiService'
 let apiServices = new apiService()
+*/
 
-import Vue from 'vue'
-import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
-
-Vue.use(Buefy)
 export default {
     /*
 created() {

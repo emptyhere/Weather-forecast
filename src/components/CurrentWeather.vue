@@ -62,17 +62,16 @@ export default {
         };
     },
     created() {
-    
     this.$store.dispatch('getGeoLocation')
-    setTimeout(()=>{
-        apiServices.getCurrentWeather(this.$store.state.userLocation.latitude,
-        this.$store.state.userLocation.longitude)
-        .then(response => (this.weatherData = response.data.weather,
-        this.otherData = response.data
-        ))
-        console.log(this.$store.state.userLocation.latitude)
-    }, 2500)
-
-  }
+        let interval = setInterval(()=>{
+            apiServices.getCurrentWeather(this.$store.state.userLocation.latitude,
+            this.$store.state.userLocation.longitude)
+            .then(response => (this.weatherData = response.data.weather,
+            this.otherData = response.data
+            ))
+            .then(clearInterval(interval))
+            console.log('test')
+        }, 10)          
+    }
 }
 </script>

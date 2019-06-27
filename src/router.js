@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from './App.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path:'/',
+      path: '/',
       name: 'home',
-      component: App
+      component: () => import('./App.vue')
+    },
+    {
+      path: '/',
+      name: 'today',
+      component: () => import('./components/CurrentWeather.vue')
+    },
+    {
+      path: '/',
+      name: 'fiveday',
+      component: () => import('./components/CurrentWeather.vue')
     }
+
   ]
 })
